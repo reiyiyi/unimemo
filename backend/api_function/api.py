@@ -21,7 +21,11 @@ MEMO_INDEX_NAME = os.getenv('MEMO_INDEX_NAME')
 MIRROR_INDEX_NAME = os.getenv('MIRROR_INDEX_NAME')
 dynamodb = boto3.client('dynamodb')
 
-DB_ERROR_STATUS = "#DBerror"
+
+# DynamoDBでの処理に失敗した際にraiseするエラー
+class DataBaseError(Exception):
+    pass
+
 
 # セッション情報からユーザIDの取得をする関数
 def get_user_id(session):
@@ -39,9 +43,9 @@ def get_user_id(session):
             },
             ExpressionAttributeValues={":session_val": {"S": session}},
         )
-    # エラーが発生した場合はエラーステータスを返す
     except BaseException as be:
-        return DB_ERROR_STATUS
+        # エラーが発生した場合はエラーステータスを返す
+        raise(DataBaseError(be))
     
     # 与えられたセッション値と紐づけられているユーザIDが無い場合は空文字列を返す
     if not response["Items"]:
@@ -65,9 +69,24 @@ def handler(event, context):
     
     #--------以下のAPIはログイン状態であることが必要--------
     session = request_body["session"]
-    user_id = get_user_id(session)
+    try:
+        user_id = get_user_id(session)
+    except DataBaseError as e:
+        # セッション情報照合時にデータベース側でエラーが発生した場合
+        return {
+            'statusCode': 500,
+            'headers': {
+                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST",
+                #"Access-Control-Allow-Credentials": 'true'
+            },
+            'body': json.dumps({
+                "message" : "Internal server error."
+            })
+        }
     
-    # ユーザIDが取得出来なかった場合
+    # ユーザIDを取得出来なかった場合
     if not user_id:
         return {
             'statusCode': 400,
@@ -79,20 +98,6 @@ def handler(event, context):
             },
             'body': json.dumps({
                 "message" : "Please login."
-            })
-        }
-    # セッション情報照合時にデータベース側でエラーが発生した場合
-    if user_id == DB_ERROR_STATUS:
-        return {
-            'statusCode': 500,
-            'headers': {
-                "Access-Control-Allow-Headers": "Content-Type",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "OPTIONS,POST",
-                #"Access-Control-Allow-Credentials": 'true'
-            },
-            'body': json.dumps({
-                "message" : "Internal server error."
             })
         }
         

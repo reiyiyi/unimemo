@@ -50,7 +50,7 @@ def create_session(user_id):
                 TableName=TABLE_NAME,
                 Key={
                     "id": {
-                        "S": user_id
+                        "S": f"{user_id}#user"
                     }
                 },
                 UpdateExpression="SET #se = :session_val",
@@ -78,7 +78,7 @@ def login_check(user_id, password):
             TableName=TABLE_NAME,
             Key={
                 "id": {
-                    "S": user_id
+                    "S": f"{user_id}#user"
                 }
             }
         )
@@ -98,7 +98,7 @@ def login_check(user_id, password):
     
     
 def LoginAPI(request_body):
-    user_id = request_body["user_id"] + "#user"
+    user_id = request_body["user_id"]
     password = request_body["password"]
     
     try:

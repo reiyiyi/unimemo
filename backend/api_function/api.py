@@ -72,7 +72,7 @@ def handler(event, context):
     try:
         user_id = get_user_id(session)
     except DataBaseError as e:
-        # セッション情報照合時にデータベース側でエラーが発生した場合
+        # データベース側でエラーが発生した場合
         return {
             'statusCode': 500,
             'headers': {

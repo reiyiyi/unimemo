@@ -124,7 +124,7 @@ def LoginAPI(request_body):
             # セッション情報の生成を行なう
             session = create_session(user_id)
         except DataBaseError as e:
-            # セッション情報の生成時にデータベース側でエラーが発生した場合
+            # データベース側でエラーが発生した場合
             return {
                 'statusCode': 500,
                 'headers': {

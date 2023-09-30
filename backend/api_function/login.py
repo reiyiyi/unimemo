@@ -57,7 +57,9 @@ def create_session(user_id):
                 ExpressionAttributeNames= {
                     '#se' : 'session',
                 },
-                ExpressionAttributeValues={":session_val": {"S": session}},
+                ExpressionAttributeValues={
+                    ":session_val": {"S": session}
+                },
             )
         except BaseException as be:
             # エラーが発生した場合はエラーステータスを返す

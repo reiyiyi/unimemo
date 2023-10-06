@@ -1,12 +1,10 @@
 import GetUrl from './url';
 import { useState, useEffect } from 'react'
 
-// Response Data: {DB response}
-const SearchMirrorRequest = (difficulty, mirror, session) => {
+// Response Data: {user_id}
+const IsLoginRequest = (session) => {
     const requestBody = {
-        API: "SearchMirrorAPI",
-        difficulty: difficulty,
-        mirror: mirror,
+        API: "IsLoginAPI",
         session: session
     };
 
@@ -30,8 +28,6 @@ const SearchMirrorRequest = (difficulty, mirror, session) => {
                         error_status: response.status
                     });
                     switch (response.status) {
-                        case 400:
-                            throw new Error('Bad request error.');
                         case 500:
                             throw new Error('Internal server error.');
                         default:
@@ -42,7 +38,7 @@ const SearchMirrorRequest = (difficulty, mirror, session) => {
                 const data = await response.json();
                 setData(data);
             } catch (error) {
-                console.error("Error in SearchMirrorRequest:", error);
+                console.error("Error in IsLoginRequest:", error);
             }
         })()
     }, [])
@@ -50,4 +46,4 @@ const SearchMirrorRequest = (difficulty, mirror, session) => {
     return responseBody
 };
 
-export default SearchMirrorRequest;
+export default IsLoginRequest;

@@ -2,11 +2,10 @@ import GetUrl from './url';
 import { useState, useEffect } from 'react'
 
 // Response Data: {DB response}
-const SearchMirrorRequest = (difficulty, mirror, session) => {
+const GetChartRequest = (chart_id, session) => {
     const requestBody = {
-        API: "SearchMirrorAPI",
-        difficulty: difficulty,
-        mirror: mirror,
+        API: "GetChartAPI",
+        chart_id: chart_id,
         session: session
     };
 
@@ -42,7 +41,7 @@ const SearchMirrorRequest = (difficulty, mirror, session) => {
                 const data = await response.json();
                 setData(data);
             } catch (error) {
-                console.error("Error in SearchMirrorRequest:", error);
+                console.error("Error in GetChartRequest:", error);
             }
         })()
     }, [])
@@ -50,4 +49,4 @@ const SearchMirrorRequest = (difficulty, mirror, session) => {
     return responseBody
 };
 
-export default SearchMirrorRequest;
+export default GetChartRequest;

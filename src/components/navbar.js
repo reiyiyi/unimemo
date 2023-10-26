@@ -16,18 +16,18 @@ const Navbar = (props) => {
                                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                         <li className="nav-item active">
-                                            <Link className="nav-link active" to="/change/name">名前変更</Link>
+                                            <Link className="nav-link active" to="/change/name">ユーザー名変更</Link>
                                         </li>
-                                        <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                        <li className="nav-item dropdown">
+                                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                                 data-bs-toggle="dropdown" aria-expanded="false">
                                                 Links
                                             </a>
-                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                                                 <Link className="dropdown-item" to="/guide/donation">寄付のお願いについて</Link>
                                                 <Link className="dropdown-item" to="/guide/inquiry">問い合わせについて</Link>
-                                                <li><a class="dropdown-item" href="https://github.com/reiyiyi/unimemo" target="_blank">GitHub</a></li>
-                                                <li><a class="dropdown-item" href="https://twitter.com/Re_gi_A" target="_blank">@Re_gi_A</a></li>
+                                                <li><a className="dropdown-item" href="https://github.com/reiyiyi/unimemo" target="_blank">GitHub</a></li>
+                                                <li><a className="dropdown-item" href="https://twitter.com/Re_gi_A" target="_blank">@Re_gi_A</a></li>
                                             </ul>
                                         </li>
                                         <li className="nav-item">
@@ -47,16 +47,16 @@ const Navbar = (props) => {
                                 </button>
                                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                                        <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                        <li className="nav-item dropdown">
+                                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                                 data-bs-toggle="dropdown" aria-expanded="false">
                                                 Links
                                             </a>
-                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                                                 <Link className="dropdown-item" to="/guide/donation">寄付のお願いについて</Link>
                                                 <Link className="dropdown-item" to="/guide/inquiry">問い合わせについて</Link>
-                                                <li><a class="dropdown-item" href="https://github.com/reiyiyi/unimemo" target="_blank">GitHub</a></li>
-                                                <li><a class="dropdown-item" href="https://twitter.com/Re_gi_A" target="_blank">@Re_gi_A</a></li>
+                                                <li><a className="dropdown-item" href="https://github.com/reiyiyi/unimemo" target="_blank">GitHub</a></li>
+                                                <li><a className="dropdown-item" href="https://twitter.com/Re_gi_A" target="_blank">@Re_gi_A</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -65,7 +65,7 @@ const Navbar = (props) => {
                         </nav>
                     )
             }
-        </div >
+        </div>
     );
 };
 

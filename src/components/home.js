@@ -1,16 +1,42 @@
-import React, { useState } from 'react';
-import SearchForm from './searchForm';
-import { interpolateRgb } from 'd3-interpolate';
-import LiquidFillGauge from 'react-liquid-gauge';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import SearchForm from "./searchForm";
+import { interpolateRgb } from "d3-interpolate";
+import LiquidFillGauge from "react-liquid-gauge";
+import { useNavigate, Link } from "react-router-dom";
+import GetCookieData from "../api_access/getCookieData";
+import GetUserIdRequest from "../api_access/getUserId";
 
 const Home = () => {
+    const cookie_data = GetCookieData();
+    const session = ("session" in cookie_data) ? cookie_data.session : "";
+
     const navigate = useNavigate();
+
+    const startColor = "#003300";
+    const endColor = "#00ff77";
+    const interpolate = interpolateRgb(startColor, endColor);
+
     const [error, setError] = useState(-1);
-    const [searchStyle, setSearchStyle] = useState("");
     const [searchResult, setSearchResult] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [isSearched, setIsSearched] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isSearching, setIsSearching] = useState(false);
+
+    useEffect(() => {
+        (async () => {
+            const response = await GetUserIdRequest(session);
+            if ("error_status" in response) {
+                setError(response.error_status);
+            }
+            setIsLoading(false);
+        })()
+    }, []);
+
+    if (isLoading) {
+        return (
+            <h1>Wait...</h1>
+        )
+    }
 
     const SearchStyleValue = Object.freeze({
         chart_info: "chart_info",
@@ -38,10 +64,6 @@ const Home = () => {
         on: "ON",
         off: "OFF"
     });
-
-    const startColor = "#003300";
-    const endColor = "#00ff77";
-    const interpolate = interpolateRgb(startColor, endColor);
 
     if (error != -1) {
         navigate(`/error/${error}`);
@@ -84,7 +106,7 @@ const Home = () => {
                         <SearchForm
                             searchStyle={SearchStyleValue.chart_info}
                             setSearchResult={setSearchResult}
-                            setIsLoading={setIsLoading}
+                            setIsSearching={setIsSearching}
                             setIsSearched={setIsSearched}
                             setError={setError}
                         />
@@ -93,7 +115,7 @@ const Home = () => {
                         <SearchForm
                             searchStyle={SearchStyleValue.tune}
                             setSearchResult={setSearchResult}
-                            setIsLoading={setIsLoading}
+                            setIsSearching={setIsSearching}
                             setIsSearched={setIsSearched}
                             setError={setError}
                         />
@@ -102,7 +124,7 @@ const Home = () => {
                         <SearchForm
                             searchStyle={SearchStyleValue.status}
                             setSearchResult={setSearchResult}
-                            setIsLoading={setIsLoading}
+                            setIsSearching={setIsSearching}
                             setIsSearched={setIsSearched}
                             setError={setError}
                         />
@@ -111,7 +133,7 @@ const Home = () => {
                         <SearchForm
                             searchStyle={SearchStyleValue.mirror}
                             setSearchResult={setSearchResult}
-                            setIsLoading={setIsLoading}
+                            setIsSearching={setIsSearching}
                             setIsSearched={setIsSearched}
                             setError={setError}
                         />
@@ -120,7 +142,7 @@ const Home = () => {
                         <SearchForm
                             searchStyle={SearchStyleValue.memo}
                             setSearchResult={setSearchResult}
-                            setIsLoading={setIsLoading}
+                            setIsSearching={setIsSearching}
                             setIsSearched={setIsSearched}
                             setError={setError}
                         />
@@ -129,7 +151,7 @@ const Home = () => {
             </div>
 
             {
-                isLoading ?
+                isSearching ?
                     (
                         <div className="row justify-content-center">
                             <div className="col-md-1">
@@ -141,7 +163,7 @@ const Home = () => {
                         </div>
                     ) :
                     (
-                        <table className="table table-hover table-sm table-sticky-header" style={{fontSize:".8rem"}}>
+                        <table className="table table-hover table-sm table-sticky-header" style={{ fontSize: ".8rem" }}>
                             {
                                 isSearched ? (
                                     <thead>
@@ -183,7 +205,7 @@ const Home = () => {
                                             </td>
                                             <td>
                                                 <LiquidFillGauge
-                                                    style={{ margin: '0 auto' }}
+                                                    style={{ margin: "0 auto" }}
                                                     width={20}
                                                     height={20}
                                                     textSize={0}
@@ -194,12 +216,12 @@ const Home = () => {
                                                 />
                                             </td>
                                             <td>
-                                                <button className="btn btn-sm btn-success" type="button" data-bs-toggle="collapse" data-bs-target={`#chart_${i}`} aria-expanded="false" aria-controls={`chart_${i}`}>
+                                                <button className="btn cell-btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target={`#chart_${i}`} aria-expanded="false" aria-controls={`chart_${i}`}>
                                                     ▽
                                                 </button>
                                             </td>
                                             <td>
-                                                <Link className="btn btn-sm btn-danger no-wrap" to={`/change/information/${chart.id.S}`}>変更</Link>
+                                                <Link className="btn cell-btn btn-danger no-wrap" to={`/change/information/${chart.id.S}`}>変更</Link>
                                             </td>
                                         </tr>
                                         <tr>

@@ -1,12 +1,9 @@
 import GetUrl from "./url";
 
-// Response Data: {DB response}
-const SearchChartRequest = async (difficulty, level, genre, session) => {
+// Response Data: {user_id}
+const GetUserIdRequest = async (session) => {
     const requestBody = {
-        API: "SearchChartAPI",
-        difficulty: difficulty,
-        level: level,
-        genre: genre,
+        API: "GetUserIdAPI",
         session: session
     };
 
@@ -28,8 +25,6 @@ const SearchChartRequest = async (difficulty, level, genre, session) => {
                 error_status: response.status
             };
             switch (response.status) {
-                case 400:
-                    throw new Error("Bad request error.");
                 case 500:
                     throw new Error("Internal server error.");
                 default:
@@ -39,10 +34,10 @@ const SearchChartRequest = async (difficulty, level, genre, session) => {
 
         responseBody = await response.json();
     } catch (error) {
-        console.error("Error in SearchChartRequest:", error);
+        console.error("Error in GetUserIdRequest:", error);
     }
 
     return responseBody;
 };
 
-export default SearchChartRequest;
+export default GetUserIdRequest;

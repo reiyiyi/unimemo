@@ -1,8 +1,7 @@
-import GetUrl from './url';
-import { useState, useEffect } from 'react'
+import GetUrl from "./url";
 
 // Response Data: {change_status}
-const ChangeInformationRequest = (chart_id, status, memo, mirror, session) => {
+const ChangeInformationRequest = async (chart_id, status, memo, mirror, session) => {
     const requestBody = {
         API: "ChangeInformationAPI",
         chart_id: chart_id,
@@ -12,44 +11,39 @@ const ChangeInformationRequest = (chart_id, status, memo, mirror, session) => {
         session: session
     };
 
-    const [responseBody, setData] = useState([])
+    var responseBody = [];
     const url = GetUrl();
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const response = await fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    mode: 'cors',
-                    body: JSON.stringify(requestBody)
-                });
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            mode: "cors",
+            body: JSON.stringify(requestBody)
+        });
 
-                if (!response.ok) {
-                    setData({
-                        error_status: response.status
-                    });
-                    switch (response.status) {
-                        case 400:
-                            throw new Error('Bad request error.');
-                        case 500:
-                            throw new Error('Internal server error.');
-                        default:
-                            throw new Error('Something error.');
-                    }
-                }
-
-                const data = await response.json();
-                setData(data);
-            } catch (error) {
-                console.error("Error in ChangeInformationRequest:", error);
+        if (!response.ok) {
+            responseBody = {
+                error_status: response.status
+            };
+            switch (response.status) {
+                case 400:
+                    throw new Error("Bad request error.");
+                case 500:
+                    throw new Error("Internal server error.");
+                default:
+                    throw new Error("Something error.");
             }
-        })()
-    }, [])
+        }
 
-    return responseBody
+        responseBody = await response.json();
+    } catch (error) {
+        console.error("Error in ChangeInformationRequest:", error);
+    }
+
+    return responseBody;
 };
 
 export default ChangeInformationRequest;

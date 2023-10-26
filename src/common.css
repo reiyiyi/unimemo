@@ -1,0 +1,120 @@
+.introduction-card {
+    background: #c5ffd4;
+    border-radius: 1rem;
+    padding: 2rem;
+    margin: 1rem;
+}
+
+.validation {
+    color: gray;
+    font-size: 0.8rem;
+    margin-bottom: 0;
+}
+
+.validation-error {
+    color: red;
+    font-size: 0.8rem;
+}
+
+.cell-btn {
+    --bs-btn-padding-y: 0.15rem;
+    --bs-btn-padding-x: 0.4rem;
+    --bs-btn-font-size: 0.875rem;
+}
+
+.form-btn {
+    margin: 0.5rem;
+}
+
+.h1 {
+    font-weight: 900;
+}
+
+.nav-scroller {
+    overflow-y: hidden;
+}
+
+.nav-underline .nav-link {
+    padding: 0.25rem 0.35rem;
+    font-size: 0.8rem;
+    color: var(--bs-gray);
+    height: 2.5rem;
+}
+
+.nav-scroller .nav {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.memo-card {
+    padding: 0 !important;
+}
+
+.memo-card .show .card-body {
+    max-height: 15rem;
+    overflow: scroll;
+}
+
+.search-form {
+    background-color: #c5ffd4;
+    border-radius: 0.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-content {
+    padding: 10px;
+}
+
+.no-wrap {
+    white-space: nowrap;
+}
+
+.form-label {
+    font-weight: 600;
+}
+
+.chart-row .BAS {
+    color: #55dd55 !important;
+    font-weight: 600;
+}
+
+.chart-row .ADV {
+    color: #ffaa00 !important;
+    font-weight: 600;
+}
+
+.chart-row .EXP {
+    color: #ff1111 !important;
+    font-weight: 600;
+}
+
+.chart-row .MAS {
+    color: #aa00aa !important;
+    font-weight: 600;
+}
+
+.chart-row .ULT {
+    color: #862333 !important;
+    font-weight: 600;
+}
+
+.chart-row .strength {
+    background-color: #55dd55 !important;
+    color: white !important;
+    font-weight: 600;
+}
+
+.chart-row .weakness {
+    background-color: #ff1111 !important;
+    color: white !important;
+    font-weight: 600;
+}
+
+.chart-row .mirror-on {
+    color: #ff0000 !important;
+    font-weight: 600;
+}
+
+.memo-textarea {
+    height: 20rem;
+}

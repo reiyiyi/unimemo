@@ -162,17 +162,17 @@ const SearchChartForm = (props) => {
     const statusChoices = [
         { value: "strength", option: "武器譜面" },
         { value: "weakness", option: "警戒譜面" },
-        { value: "none", option: "無し" }
+        // { value: "none", option: "無し" }
     ];
 
     const memoChoices = [
         { value: "written", option: "設定済" },
-        { value: "unwritten", option: "未設定" }
+        // { value: "unwritten", option: "未設定" }
     ];
 
     const mirrorChoices = [
         { value: "on", option: "ON" },
-        { value: "off", option: "OFF" }
+        // { value: "off", option: "OFF" }
     ];
 
     switch (searchStyle) {

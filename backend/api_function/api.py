@@ -8,18 +8,19 @@ from searchTune import SearchTuneAPI
 from searchMemo import SearchMemoAPI
 from searchStatus import SearchStatusAPI
 from searchMirror import SearchMirrorAPI
+from getChart import GetChartAPI
 from changeInformation import ChangeInformationAPI
 from changeName import ChangeNameAPI
 from logout import LogoutAPI
 
-TABLE_NAME = os.getenv('TABLE_NAME')
-SESSION_INDEX_NAME = os.getenv('SESSION_INDEX_NAME')
-SEARCH_INDEX_NAME = os.getenv('SEARCH_INDEX_NAME')
-LEVEL_INDEX_NAME = os.getenv('LEVEL_INDEX_NAME')
-STATUS_INDEX_NAME = os.getenv('STATUS_INDEX_NAME')
-MEMO_INDEX_NAME = os.getenv('MEMO_INDEX_NAME')
-MIRROR_INDEX_NAME = os.getenv('MIRROR_INDEX_NAME')
-dynamodb = boto3.client('dynamodb')
+TABLE_NAME = os.getenv("TABLE_NAME")
+SESSION_INDEX_NAME = os.getenv("SESSION_INDEX_NAME")
+SEARCH_INDEX_NAME = os.getenv("SEARCH_INDEX_NAME")
+LEVEL_INDEX_NAME = os.getenv("LEVEL_INDEX_NAME")
+STATUS_INDEX_NAME = os.getenv("STATUS_INDEX_NAME")
+MEMO_INDEX_NAME = os.getenv("MEMO_INDEX_NAME")
+MIRROR_INDEX_NAME = os.getenv("MIRROR_INDEX_NAME")
+dynamodb = boto3.client("dynamodb")
 
 
 # DynamoDBでの処理に失敗した際にraiseするエラー
@@ -39,7 +40,7 @@ def get_user_id(session):
             IndexName = SESSION_INDEX_NAME,
             KeyConditionExpression = "#se = :session_val",
             ExpressionAttributeNames= {
-            '#se' : 'session',
+            "#se" : "session",
             },
             ExpressionAttributeValues={":session_val": {"S": session}},
         )
@@ -74,14 +75,14 @@ def handler(event, context):
     except DataBaseError as e:
         # データベース側でエラーが発生した場合
         return {
-            'statusCode': 500,
-            'headers': {
+            "statusCode": 500,
+            "headers": {
                 "Access-Control-Allow-Headers": "Content-Type",
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST",
-                #"Access-Control-Allow-Credentials": 'true'
+                #"Access-Control-Allow-Credentials": "true"
             },
-            'body': json.dumps({
+            "body": json.dumps({
                 "message" : "Internal server error."
             })
         }
@@ -89,17 +90,32 @@ def handler(event, context):
     # ユーザIDを取得出来なかった場合
     if not user_id:
         return {
-            'statusCode': 400,
-            'headers': {
+            "statusCode": 400,
+            "headers": {
                 "Access-Control-Allow-Headers": "Content-Type",
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST",
-                #"Access-Control-Allow-Credentials": 'true'
+                #"Access-Control-Allow-Credentials": "true"
             },
-            'body': json.dumps({
+            "body": json.dumps({
                 "message" : "Please login."
             })
         }
+        
+    # ユーザIDの取得を行なうAPI
+    if request_api_name == "GetUserIdAPI":
+        return {
+        "statusCode": 200,
+        "headers": {
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST",
+            #"Access-Control-Allow-Credentials": "true"
+        },
+        "body": json.dumps({
+            "user_id": user_id
+        })
+    }
         
     # 譜面情報をもとに譜面の検索処理を行なうAPI
     if request_api_name == "SearchChartAPI":
@@ -122,6 +138,10 @@ def handler(event, context):
         return SearchMirrorAPI(user_id, request_body)
     
     # 譜面に設定された情報の変更処理を行なうAPI
+    if request_api_name == "GetChartAPI":
+        return GetChartAPI(user_id, request_body)
+    
+    # 譜面に設定された情報の変更処理を行なうAPI
     if request_api_name == "ChangeInformationAPI":
         return ChangeInformationAPI(user_id, request_body)
     
@@ -131,19 +151,19 @@ def handler(event, context):
     
     # ログアウト処理を行なうAPI
     if request_api_name == "LogoutAPI":
-        return LogoutAPI(user_id, request_body)
+        return LogoutAPI(user_id)
     
     
     # 想定されていないAPI名が渡された場合
     return {
-        'statusCode': 400,
+        "statusCode": 400,
         "headers": {
             "Access-Control-Allow-Headers": "Content-Type",
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "OPTIONS,POST",
-            #"Access-Control-Allow-Credentials": 'true'
+            #"Access-Control-Allow-Credentials": "true"
         },
-        'body': json.dumps({
+        "body": json.dumps({
             "message":"f{request_api_name} does not exist."
         })
     }

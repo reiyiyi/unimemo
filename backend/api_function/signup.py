@@ -3,14 +3,14 @@ import json
 import boto3
 import hashlib
 
-TABLE_NAME = os.getenv('TABLE_NAME')
-SESSION_INDEX_NAME = os.getenv('SESSION_INDEX_NAME')
-SEARCH_INDEX_NAME = os.getenv('SEARCH_INDEX_NAME')
-LEVEL_INDEX_NAME = os.getenv('LEVEL_INDEX_NAME')
-STATUS_INDEX_NAME = os.getenv('STATUS_INDEX_NAME')
-MEMO_INDEX_NAME = os.getenv('MEMO_INDEX_NAME')
-MIRROR_INDEX_NAME = os.getenv('MIRROR_INDEX_NAME')
-dynamodb = boto3.client('dynamodb')
+TABLE_NAME = os.getenv("TABLE_NAME")
+SESSION_INDEX_NAME = os.getenv("SESSION_INDEX_NAME")
+SEARCH_INDEX_NAME = os.getenv("SEARCH_INDEX_NAME")
+LEVEL_INDEX_NAME = os.getenv("LEVEL_INDEX_NAME")
+STATUS_INDEX_NAME = os.getenv("STATUS_INDEX_NAME")
+MEMO_INDEX_NAME = os.getenv("MEMO_INDEX_NAME")
+MIRROR_INDEX_NAME = os.getenv("MIRROR_INDEX_NAME")
+dynamodb = boto3.client("dynamodb")
 
 
 # DynamoDBでの処理に失敗した際にraiseするエラー
@@ -52,14 +52,14 @@ def SignupAPI(request_body):
     except DataBaseError as e:
         # データベース側でエラーが発生した場合
         return {
-            'statusCode': 500,
-            'headers': {
+            "statusCode": 500,
+            "headers": {
                 "Access-Control-Allow-Headers": "Content-Type",
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST",
-                #"Access-Control-Allow-Credentials": 'true'
+                #"Access-Control-Allow-Credentials": "true"
             },
-            'body': json.dumps({
+            "body": json.dumps({
                 "message" : "Internal server error."
             })
         }
@@ -79,41 +79,41 @@ def SignupAPI(request_body):
         except BaseException as be:
             # データベース側でエラーが発生した場合
             return {
-                'statusCode': 500,
-                'headers': {
+                "statusCode": 500,
+                "headers": {
                     "Access-Control-Allow-Headers": "Content-Type",
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "OPTIONS,POST",
-                    #"Access-Control-Allow-Credentials": 'true'
+                    #"Access-Control-Allow-Credentials": "true"
                 },
-                'body': json.dumps({
+                "body": json.dumps({
                     "message" : "Internal server error."
                 })
             }
             
         return {
-            'statusCode': 200,
+            "statusCode": 200,
             "headers": {
                 "Access-Control-Allow-Headers": "Content-Type",
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST",
-                #"Access-Control-Allow-Credentials": 'true'
+                #"Access-Control-Allow-Credentials": "true"
             },
-            'body': json.dumps({
-                'user_id_check_status': True
+            "body": json.dumps({
+                "user_id_check_status": True
             })
         }
     else:
         return {
-            'statusCode': 200,
+            "statusCode": 200,
             "headers": {
                 "Access-Control-Allow-Headers": "Content-Type",
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST",
-                #"Access-Control-Allow-Credentials": 'true'
+                #"Access-Control-Allow-Credentials": "true"
             },
-            'body': json.dumps({
-                'user_id_check_status': False
+            "body": json.dumps({
+                "user_id_check_status": False
             })
         }
     

@@ -3,7 +3,7 @@ import requests
 import json
 import boto3
 
-ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
+ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 SETTING_ID_FOR_CHART = "#chart"
 DIFFICULTY_LIST = [
     "BASIC",
@@ -12,14 +12,9 @@ DIFFICULTY_LIST = [
     "MASTER"
 ]
 
-TABLE_NAME = os.getenv('TABLE_NAME')
-SESSION_INDEX_NAME = os.getenv('SESSION_INDEX_NAME')
-SEARCH_INDEX_NAME = os.getenv('SEARCH_INDEX_NAME')
-LEVEL_INDEX_NAME = os.getenv('LEVEL_INDEX_NAME')
-STATUS_INDEX_NAME = os.getenv('STATUS_INDEX_NAME')
-MEMO_INDEX_NAME = os.getenv('MEMO_INDEX_NAME')
-MIRROR_INDEX_NAME = os.getenv('MIRROR_INDEX_NAME')
-dynamodb = boto3.client('dynamodb')
+TABLE_NAME = os.getenv("TABLE_NAME")
+SEARCH_INDEX_NAME = os.getenv("SEARCH_INDEX_NAME")
+dynamodb = boto3.client("dynamodb")
 
 # APIでの処理に失敗した際にraiseするエラー
 class APIError(Exception):
@@ -48,14 +43,14 @@ def lambda_handler(event, context):
     except APIError as e:
         # API通信でエラーが発生した場合
         return {
-            'statusCode': 500,
-            'headers': {
+            "statusCode": 500,
+            "headers": {
                 "Access-Control-Allow-Headers": "Content-Type",
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST",
-                #"Access-Control-Allow-Credentials": 'true'
+                #"Access-Control-Allow-Credentials": "true"
             },
-            'body': json.dumps({
+            "body": json.dumps({
                 "message" : "Internal server error."
             })
         }
@@ -80,14 +75,14 @@ def lambda_handler(event, context):
     except BaseException as be:
         # データベース側でエラーが発生した場合
         return {
-            'statusCode': 500,
-            'headers': {
+            "statusCode": 500,
+            "headers": {
                 "Access-Control-Allow-Headers": "Content-Type",
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST",
-                #"Access-Control-Allow-Credentials": 'true'
+                #"Access-Control-Allow-Credentials": "true"
             },
-            'body': json.dumps({
+            "body": json.dumps({
                 "message" : "Internal server error."
             })
         }
@@ -106,17 +101,17 @@ def lambda_handler(event, context):
     for chart_data in chart_data_list:
         if chart_data["meta"]["genre"] == "WORLD'S END":
             continue 
-        tune_id = chart_data['meta']['id']
+        tune_id = chart_data["meta"]["id"]
         if f"{tune_id}#MASTER#chart" not in tune_data_set:
             try:
                 for difficulty in DIFFICULTY_LIST:
-                    tune_name = chart_data['meta']['title']
-                    genre = chart_data['meta']['genre']
-                    level = chart_data['data'][difficulty[:3]]['level']
+                    tune_name = chart_data["meta"]["title"]
+                    genre = chart_data["meta"]["genre"]
+                    level = chart_data["data"][difficulty[:3]]["level"]
                     if int(level * 10) % 10 == 0:
                         level = str(int(level))
                     else:
-                        level = str(int(level)) + "+"    
+                        level = f"{str(int(level))}+"    
                     dynamodb.put_item(
                         TableName=TABLE_NAME,
                         Item={
@@ -136,14 +131,14 @@ def lambda_handler(event, context):
             except BaseException as be:
                 # データベース側でエラーが発生した場合
                 return {
-                    'statusCode': 500,
-                    'headers': {
+                    "statusCode": 500,
+                    "headers": {
                         "Access-Control-Allow-Headers": "Content-Type",
                         "Access-Control-Allow-Origin": "*",
                         "Access-Control-Allow-Methods": "OPTIONS,POST",
-                        #"Access-Control-Allow-Credentials": 'true'
+                        #"Access-Control-Allow-Credentials": "true"
                     },
-                    'body': json.dumps({
+                    "body": json.dumps({
                         "message" : "Internal server error."
                     })
                 }
@@ -152,12 +147,12 @@ def lambda_handler(event, context):
     for chart_data in chart_data_list:
         if "ULT" not in chart_data["data"]:
             continue
-        tune_id = chart_data['meta']['id']
+        tune_id = chart_data["meta"]["id"]
         if f"{tune_id}#ULTIMA#chart" not in ultima_data_set:
             try:
-                tune_name = chart_data['meta']['title']
-                genre = chart_data['meta']['genre']
-                level = chart_data['data']['ULT']['level']
+                tune_name = chart_data["meta"]["title"]
+                genre = chart_data["meta"]["genre"]
+                level = chart_data["data"]["ULT"]["level"]
                 if int(level * 10) % 10 == 0:
                     level = str(int(level))
                 else:
@@ -181,22 +176,22 @@ def lambda_handler(event, context):
             except BaseException as be:
                 # データベース側でエラーが発生した場合
                 return {
-                    'statusCode': 500,
-                    'headers': {
+                    "statusCode": 500,
+                    "headers": {
                         "Access-Control-Allow-Headers": "Content-Type",
                         "Access-Control-Allow-Origin": "*",
                         "Access-Control-Allow-Methods": "OPTIONS,POST",
-                        #"Access-Control-Allow-Credentials": 'true'
+                        #"Access-Control-Allow-Credentials": "true"
                     },
-                    'body': json.dumps({
+                    "body": json.dumps({
                         "message" : "Internal server error."
                     })
                 }
         
     
     return {
-        'statusCode': 200,
-        'body': json.dumps({
-            'update_status': True
+        "statusCode": 200,
+        "body": json.dumps({
+            "update_status": True
         })
     }

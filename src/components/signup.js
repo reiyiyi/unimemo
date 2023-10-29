@@ -82,7 +82,7 @@ const Signup = () => {
         if ("error_status" in responseData) {
             setError(responseData.error_status);
         }
-        else if (responseData.signup_status) {
+        else if (responseData.user_id_check_status) {
             document.cookie = `session=${responseData.session}`;
             toast.success("アカウントの作成に成功しました！");
             navigate("/login");

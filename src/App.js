@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import { ToastContainer } from 'react-toastify';
-import './App.css';
-import './common.css';
-import GetCookieData from './api_access/getCookieData';
-import Top from './components/top';
-import Home from './components/home';
-import Login from './components/login';
-import Signup from './components/signup';
-import InformationChange from './components/informationChange';
-import NameChange from './components/nameChange';
-import Logout from './components/logout';
-import Navbar from './components/navbar';
-import Error from './components/error';
-import Donation from './components/donation';
-import Inquiry from './components/inquiry';
+import { ToastContainer } from "react-toastify";
+import "./App.css";
+import "./common.css";
+import GetCookieData from "./api_access/getCookieData";
+import Top from "./components/top";
+import Home from "./components/home";
+import Login from "./components/login";
+import Signup from "./components/signup";
+import InformationChange from "./components/informationChange";
+import NameChange from "./components/nameChange";
+import Logout from "./components/logout";
+import Navbar from "./components/navbar";
+import Error from "./components/error";
+import Donation from "./components/donation";
+import Inquiry from "./components/inquiry";
 
 const App = () => {
     const cookie_data = GetCookieData();
-    const [isAuth, setIsAuth] = useState('session' in cookie_data);
+    const [isAuth, setIsAuth] = useState("session" in cookie_data);
 
     return (
         <div className="App">

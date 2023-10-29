@@ -69,7 +69,7 @@ const SearchChartForm = (props) => {
             props.setError(responseData.error_status);
         }
         else {
-            props.setSearchResult(responseData);
+            props.setSearchResult(responseData.search_result);
             props.setIsSearched(true);
         }
         props.setIsSearching(false);
@@ -80,8 +80,13 @@ const SearchChartForm = (props) => {
 
         props.setIsSearching(true);
         const responseData = await SearchTuneRequest(difficulty, searchWord, session);
-        props.setSearchResult(responseData);
-        props.setIsSearched(true);
+        if ("error_status" in responseData) {
+            props.setError(responseData.error_status);
+        }
+        else {
+            props.setSearchResult(responseData.search_result);
+            props.setIsSearched(true);
+        }
         props.setIsSearching(false);
     }
 
@@ -90,8 +95,13 @@ const SearchChartForm = (props) => {
 
         props.setIsSearching(true);
         const responseData = await SearchStatusRequest(difficulty, status, session);
-        props.setSearchResult(responseData);
-        props.setIsSearched(true);
+        if ("error_status" in responseData) {
+            props.setError(responseData.error_status);
+        }
+        else {
+            props.setSearchResult(responseData.search_result);
+            props.setIsSearched(true);
+        }
         props.setIsSearching(false);
     }
 
@@ -100,8 +110,13 @@ const SearchChartForm = (props) => {
 
         props.setIsSearching(true);
         const responseData = await SearchMemoRequest(difficulty, memoLength, session);
-        props.setSearchResult(responseData);
-        props.setIsSearched(true);
+        if ("error_status" in responseData) {
+            props.setError(responseData.error_status);
+        }
+        else {
+            props.setSearchResult(responseData.search_result);
+            props.setIsSearched(true);
+        }
         props.setIsSearching(false);
     }
 
@@ -110,8 +125,13 @@ const SearchChartForm = (props) => {
 
         props.setIsSearching(true);
         const responseData = await SearchMirrorRequest(difficulty, mirror, session);
-        props.setSearchResult(responseData);
-        props.setIsSearched(true);
+        if ("error_status" in responseData) {
+            props.setError(responseData.error_status);
+        }
+        else {
+            props.setSearchResult(responseData.search_result);
+            props.setIsSearched(true);
+        }
         props.setIsSearching(false);
     }
 

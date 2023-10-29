@@ -1,11 +1,11 @@
 import GetUrl from "./url";
 
 // Response Data: {DB response}
-const SearchTuneRequest = async (difficulty, search_word, session) => {
+const SearchTuneRequest = async (difficulty, tune_search_word, session) => {
     const requestBody = {
         API: "SearchTuneAPI",
         difficulty: difficulty,
-        search_word: search_word,
+        tune_search_word: tune_search_word,
         session: session
     };
 

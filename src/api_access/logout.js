@@ -1,6 +1,6 @@
 import GetUrl from "./url";
 
-// Response Data: {logout_status}
+// Response Data: {logout_check_status}
 const LogoutRequest = async (session) => {
     const requestBody = {
         API: "LogoutAPI",

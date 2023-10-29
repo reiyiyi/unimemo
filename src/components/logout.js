@@ -13,7 +13,7 @@ const Logout = (props) => {
     
     const navigate = useNavigate();
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(-1);
 
     useEffect(() => {
@@ -36,7 +36,7 @@ const Logout = (props) => {
             if ("error_status" in responseData) {
                 setError(responseData.error_status);
             }
-            else if (responseData.logout_status) {
+            else if (responseData.logout_check_status) {
                 document.cookie = "session=;max-age=0";
                 props.setIsAuth(false);
                 toast.success("ログアウトしました");

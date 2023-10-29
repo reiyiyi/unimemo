@@ -1,6 +1,6 @@
 import GetUrl from "./url";
 
-// Response Data: {signup_status}
+// Response Data: {user_id_check_status}
 const SignupRequest = async (user_id, user_name, password) => {
     const requestBody = {
         API: "SignupAPI",

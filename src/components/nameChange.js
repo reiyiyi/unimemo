@@ -15,7 +15,7 @@ const NameChange = () => {
 
     const [userName, setUserName] = useState("");
     const [userNameError, setUserNameError] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(-1);
 
     useEffect(() => {

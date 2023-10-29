@@ -12,6 +12,8 @@ const Home = () => {
 
     const navigate = useNavigate();
 
+    const CHART_TAG = "#chart";
+
     const startColor = "#003300";
     const endColor = "#00ff77";
     const interpolate = interpolateRgb(startColor, endColor);
@@ -204,16 +206,23 @@ const Home = () => {
                                                 <p key={i}>{MirrorValue[chart.mirror.S]}</p>
                                             </td>
                                             <td>
-                                                <LiquidFillGauge
-                                                    style={{ margin: "0 auto" }}
-                                                    width={20}
-                                                    height={20}
-                                                    textSize={0}
-                                                    value={chart.memo_length.N}
-                                                    waveAmplitude={0}
-                                                    circleStyle={{ fill: interpolate(chart.memo_length.N / 100) }}
-                                                    waveStyle={{ fill: interpolate(chart.memo_length.N / 100) }}
-                                                />
+                                                {
+                                                    chart.memo_length.N > 0 ? (
+                                                        <LiquidFillGauge
+                                                            style={{ margin: "0 auto" }}
+                                                            width={20}
+                                                            height={20}
+                                                            textSize={0}
+                                                            value={Math.min(100, chart.memo_length.N/2)}
+                                                            waveAmplitude={0}
+                                                            circleStyle={{ fill: interpolate(Math.min(1, chart.memo_length.N/200)) }}
+                                                            waveStyle={{ fill: interpolate(Math.min(1, chart.memo_length.N/200)) }}
+                                                        />
+                                                    ) : (
+                                                        <p>-</p>
+                                                    )
+                                                }
+                                                
                                             </td>
                                             <td>
                                                 <button className="btn cell-btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target={`#chart_${i}`} aria-expanded="false" aria-controls={`chart_${i}`}>
@@ -221,7 +230,7 @@ const Home = () => {
                                                 </button>
                                             </td>
                                             <td>
-                                                <Link className="btn cell-btn btn-danger no-wrap" to={`/change/information/${chart.id.S}`}>変更</Link>
+                                                <Link className="btn cell-btn btn-danger no-wrap" to={`/change/information/${(chart.id.S).replace("#", "&").slice(0, -CHART_TAG.length)}`}>変更</Link>
                                             </td>
                                         </tr>
                                         <tr>

@@ -30,10 +30,10 @@ const InformationChange = () => {
                 setError(response.error_status);
             }
             else {
-                setStatus(response.status.S);
-                setMemo(response.memo.S);
-                setMirror(response.mirror.S);
-                setChartData(response);
+                setStatus(response.chart_data.status.S);
+                setMemo(response.chart_data.memo.S);
+                setMirror(response.chart_data.mirror.S);
+                setChartData(response.chart_data);
             }
             setIsLoading(false);
         })()

@@ -52,7 +52,10 @@ def SearchChartAPI(user_id, request_body):
             user_response = dynamodb.query(
                 TableName = TABLE_NAME,
                 IndexName = LEVEL_INDEX_NAME,
-                KeyConditionExpression = "setting_info = :setting_info_val and level = :level_val",
+                KeyConditionExpression = "setting_info = :setting_info_val and #le = :level_val",
+                ExpressionAttributeNames= {
+                    "#le" : "level",
+                },
                 ExpressionAttributeValues = {
                     ":setting_info_val": {"S": f"{user_id}#{difficulty}"},
                     ":level_val": {"S": level}
@@ -61,7 +64,10 @@ def SearchChartAPI(user_id, request_body):
             chart_response = dynamodb.query(
                 TableName = TABLE_NAME,
                 IndexName = LEVEL_INDEX_NAME,
-                KeyConditionExpression = "setting_info = :setting_info_val and level = :level_val",
+                KeyConditionExpression = "setting_info = :setting_info_val and #le = :level_val",
+                ExpressionAttributeNames= {
+                    "#le" : "level",
+                },
                 ExpressionAttributeValues = {
                     ":setting_info_val": {"S": f"{SETTING_ID_FOR_CHART}#{difficulty}"},
                     ":level_val": {"S": level}
@@ -107,6 +113,7 @@ def SearchChartAPI(user_id, request_body):
             )
     except BaseException as be:
         # データベース側でエラーが発生した場合
+        print(be)
         return {
             "statusCode": 500,
             "headers": {

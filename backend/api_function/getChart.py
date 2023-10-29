@@ -11,16 +11,13 @@ MEMO_INDEX_NAME = os.getenv("MEMO_INDEX_NAME")
 MIRROR_INDEX_NAME = os.getenv("MIRROR_INDEX_NAME")
 dynamodb = boto3.client("dynamodb")
 
-#Todo
-
 # DynamoDBでの処理に失敗した際にraiseするエラー
 class DataBaseError(Exception):
     pass
 
 
 def GetChartAPI(user_id, request_body):
-    chart_id = request_body["chart_id"]
-    
+    chart_id = request_body["chart_id"].replace("&", "#")
     try:
         response = dynamodb.get_item(
             TableName=TABLE_NAME,
@@ -32,6 +29,7 @@ def GetChartAPI(user_id, request_body):
         )
     except BaseException as be:
         # データベース側でエラーが発生した場合
+        print(be)
         return {
             "statusCode": 500,
             "headers": {
@@ -93,6 +91,7 @@ def GetChartAPI(user_id, request_body):
         )
     except BaseException as be:
         # データベース側でエラーが発生した場合
+        print(be)
         return {
             "statusCode": 500,
             "headers": {

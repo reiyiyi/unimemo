@@ -29,11 +29,12 @@ def SearchMemoAPI(user_id, request_body):
             KeyConditionExpression = "setting_info = :setting_info_val and memo_length > :memo_length_val",
             ExpressionAttributeValues = {
                 ":setting_info_val": {"S": f"{user_id}#{difficulty}"},
-                ":memo_length_val": {"S": str(0)},
+                ":memo_length_val": {"N": str(0)},
             },
         )
     except BaseException as be:
         # データベース側でエラーが発生した場合
+        print(be)
         return {
             "statusCode": 500,
             "headers": {
@@ -56,7 +57,6 @@ def SearchMemoAPI(user_id, request_body):
             #"Access-Control-Allow-Credentials": "true"
         },
         "body": json.dumps({
-            "search_result": response["Items"]
+            "search_result": sorted(response["Items"], key=lambda x: x["tune_name"]["S"])
         })
     }
-    

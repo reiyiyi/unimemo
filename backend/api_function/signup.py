@@ -51,6 +51,7 @@ def SignupAPI(request_body):
         user_id_check_status = user_id_check(user_id)
     except DataBaseError as e:
         # データベース側でエラーが発生した場合
+        print(e)
         return {
             "statusCode": 500,
             "headers": {
@@ -73,11 +74,12 @@ def SignupAPI(request_body):
                     "id": {"S": f"{user_id}#user"},
                     "user_name": {"S": user_name},
                     "password": {"S": hashed_password},
-                    "session": {"S": ""},
+                    "session": {"S": "none"},
                 }
             )
         except BaseException as be:
             # データベース側でエラーが発生した場合
+            print(be)
             return {
                 "statusCode": 500,
                 "headers": {

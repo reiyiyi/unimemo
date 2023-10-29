@@ -19,7 +19,7 @@ class DataBaseError(Exception):
 
 def SearchStatusAPI(user_id, request_body):
     difficulty = request_body["difficulty"]
-    chart_status = request_body["chart_status"]
+    chart_status = request_body["status"]
     
     response = list()
     
@@ -27,7 +27,10 @@ def SearchStatusAPI(user_id, request_body):
         response = dynamodb.query(
             TableName = TABLE_NAME,
             IndexName = STATUS_INDEX_NAME,
-            KeyConditionExpression = "setting_info = :setting_info_val and status = :status_val",
+            KeyConditionExpression = "setting_info = :setting_info_val and #st = :status_val",
+            ExpressionAttributeNames= {
+                "#st" : "status",
+            },
             ExpressionAttributeValues = {
                 ":setting_info_val": {"S": f"{user_id}#{difficulty}"},
                 ":status_val": {"S": chart_status},
@@ -35,6 +38,7 @@ def SearchStatusAPI(user_id, request_body):
         )
     except BaseException as be:
         # データベース側でエラーが発生した場合
+        print(be)
         return {
             "statusCode": 500,
             "headers": {
@@ -57,7 +61,7 @@ def SearchStatusAPI(user_id, request_body):
             #"Access-Control-Allow-Credentials": "true"
         },
         "body": json.dumps({
-            "search_result": response["Items"]
+            "search_result": sorted(response["Items"], key=lambda x: x["tune_name"]["S"])
         })
     }
     

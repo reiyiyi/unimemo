@@ -28,14 +28,15 @@ def LogoutAPI(user_id):
             },
             UpdateExpression="SET #se = :session_val",
             ExpressionAttributeNames= {
-                    "#se" : "session",
+                "#se" : "session",
             },
             ExpressionAttributeValues={
-                ":session_val": {"S": ""}
+                ":session_val": {"S": "none"}
             },
         )
     except BaseException as be:
         # データベース側でエラーが発生した場合
+        print(be)
         return {
             "statusCode": 500,
             "headers": {

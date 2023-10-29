@@ -18,8 +18,8 @@ class DataBaseError(Exception):
 
 
 def ChangeInformationAPI(user_id, request_body):
-    chart_id = request_body["chart_id"]
-    chart_status = request_body["chart_status"]
+    chart_id = request_body["chart_id"].replace("&", "#")
+    chart_status = request_body["status"]
     memo = request_body["memo"]
     mirror = request_body["mirror"]
     
@@ -31,7 +31,10 @@ def ChangeInformationAPI(user_id, request_body):
                     "S": f"{chart_id}#{user_id}#setting"
                 }
             },
-            UpdateExpression="SET status = :status_val, memo = :memo_val, memo_length = :memo_length_val, mirror = :mirror_val",
+            UpdateExpression="SET #st = :status_val, memo = :memo_val, memo_length = :memo_length_val, mirror = :mirror_val",
+            ExpressionAttributeNames= {
+                "#st" : "status",
+            },
             ExpressionAttributeValues={
                 ":status_val": {"S": chart_status},
                 ":memo_val": {"S": memo},
@@ -41,6 +44,7 @@ def ChangeInformationAPI(user_id, request_body):
         )
     except BaseException as be:
         # データベース側でエラーが発生した場合
+        print(be)
         return {
             "statusCode": 500,
             "headers": {

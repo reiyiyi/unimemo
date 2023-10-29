@@ -21,7 +21,7 @@ def ChangeNameAPI(user_id, request_body):
     user_name = request_body["user_name"]
     
     try:
-        response = dynamodb.update_item(
+        dynamodb.update_item(
             TableName=TABLE_NAME,
             Key={
                 "id": {
@@ -35,6 +35,7 @@ def ChangeNameAPI(user_id, request_body):
         )
     except BaseException as be:
         # データベース側でエラーが発生した場合
+        print(be)
         return {
             "statusCode": 500,
             "headers": {

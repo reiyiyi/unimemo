@@ -30,6 +30,7 @@ class DataBaseError(Exception):
 
 # セッション情報からユーザIDの取得をする関数
 def get_user_id(session):
+    USER_TAG = "#user"
     # セッション情報が無い場合は空文字列を返す
     if not session:
         return ""
@@ -40,7 +41,7 @@ def get_user_id(session):
             IndexName = SESSION_INDEX_NAME,
             KeyConditionExpression = "#se = :session_val",
             ExpressionAttributeNames= {
-            "#se" : "session",
+                "#se" : "session",
             },
             ExpressionAttributeValues={":session_val": {"S": session}},
         )
@@ -53,12 +54,14 @@ def get_user_id(session):
         return ""
     
     # ユーザIDを返す
-    return response["Items"][0]["id"]["S"]
+    return response["Items"][0]["id"]["S"][:-len(USER_TAG)]
 
 
 def handler(event, context):
     request_body = eval(event["body"])
     request_api_name = request_body["API"]
+    
+    print(f"Requested API name: {request_api_name}")
     
     # 新規登録処理を行なうAPI
     if request_api_name == "SignupAPI":
@@ -74,6 +77,7 @@ def handler(event, context):
         user_id = get_user_id(session)
     except DataBaseError as e:
         # データベース側でエラーが発生した場合
+        print(e)
         return {
             "statusCode": 500,
             "headers": {

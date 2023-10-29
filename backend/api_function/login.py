@@ -108,6 +108,7 @@ def LoginAPI(request_body):
         login_check_status = login_check(user_id, password)
     except DataBaseError as e:
         # データベース側でエラーが発生した場合
+        print(e)
         return {
             "statusCode": 500,
             "headers": {
@@ -127,6 +128,7 @@ def LoginAPI(request_body):
             session = create_session(user_id)
         except DataBaseError as e:
             # データベース側でエラーが発生した場合
+            print(e)
             return {
                 "statusCode": 500,
                 "headers": {

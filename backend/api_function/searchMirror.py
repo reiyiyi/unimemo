@@ -34,6 +34,7 @@ def SearchMirrorAPI(user_id, request_body):
         )
     except BaseException as be:
         # データベース側でエラーが発生した場合
+        print(be)
         return {
             "statusCode": 500,
             "headers": {
@@ -56,7 +57,6 @@ def SearchMirrorAPI(user_id, request_body):
             #"Access-Control-Allow-Credentials": "true"
         },
         "body": json.dumps({
-            "search_result": response["Items"]
+            "search_result": sorted(response["Items"], key=lambda x: x["tune_name"]["S"])
         })
     }
-    

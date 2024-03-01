@@ -105,6 +105,14 @@ const Signup = () => {
     return (
         <div className="p-3">
             <h4 className="my-3">新規登録</h4>
+            <div className="introduction-card">
+                <p>
+                    ユーザー名は後から変更出来ますが、ユーザーIDは後から変更出来ませんのでご注意ください。
+                </p>
+                <p>
+                    また、パスワードも後から変更出来ないため、お使いのブラウザのパスワード保存機能を活用していただくか、どこかにメモを残していただくことを推奨しております。
+                </p>
+            </div>
             <div className="container">
                 <form onSubmit={doSubmit}>
                     <div className="row form-group justify-content-center">
@@ -130,7 +138,7 @@ const Signup = () => {
                             {passwordError && <p className="validation-error">{passwordError}</p>}
                         </div>
                     </div>
-                    <input type="submit" className="btn form-btn btn-success" disabled={!(userId&&userName&&password) || userIdError || userNameError || passwordError}
+                    <input type="submit" className="btn form-btn btn-success" disabled={!(userId && userName && password) || userIdError || userNameError || passwordError}
                         value="新規登録" />
                 </form>
             </div>

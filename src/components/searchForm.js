@@ -202,7 +202,7 @@ const SearchChartForm = (props) => {
                     <form onSubmit={doSubmitChartInfo}>
                         <div className="row form-group justify-content-center">
                             <div className="form-content col-md-3 col-8">
-                                <label className="form-label">難易度</label>
+                                <label className="form-label">難易度<span className="required-option">*</span></label>
                                 <select name="difficulty" className="form-select" onChange={doChangeDifficulty}>
                                     <option value="">選択してください</option>
                                     {difficultyChoices.map((difficulty, i) => <option value={difficulty.value} key={i}>{difficulty.option}</option>)}
@@ -234,7 +234,7 @@ const SearchChartForm = (props) => {
                     <form onSubmit={doSubmitTune}>
                         <div className="row form-group justify-content-center">
                             <div className="form-content col-md-5 col-8">
-                                <label className="form-label">難易度</label>
+                                <label className="form-label">難易度<span className="required-option">*</span></label>
                                 <select name="difficulty" className="form-select" onChange={doChangeDifficulty}>
                                     <option value="">選択してください</option>
                                     {difficultyChoices.map((difficulty, i) => <option value={difficulty.value} key={i}>{difficulty.option}</option>)}
@@ -258,14 +258,14 @@ const SearchChartForm = (props) => {
                     <form onSubmit={doSubmitStatus}>
                         <div className="row form-group justify-content-center">
                             <div className="form-content col-md-5 col-8">
-                                <label className="form-label">難易度</label>
+                                <label className="form-label">難易度<span className="required-option">*</span></label>
                                 <select name="difficulty" className="form-select" onChange={doChangeDifficulty}>
                                     <option value="">選択してください</option>
                                     {difficultyChoices.map((difficulty, i) => <option value={difficulty.value} key={i}>{difficulty.option}</option>)}
                                 </select>
                             </div>
                             <div className="form-content col-md-5 col-8">
-                                <label className="form-label">全国属性</label>
+                                <label className="form-label">全国属性<span className="required-option">*</span></label>
                                 <select name="status" className="form-select" onChange={doChangeStatus}>
                                     <option value="">選択してください</option>
                                     {statusChoices.map((status, i) => <option value={status.value} key={i}>{status.option}</option>)}
@@ -283,14 +283,14 @@ const SearchChartForm = (props) => {
                     <form onSubmit={doSubmitMemo}>
                         <div className="row form-group justify-content-center">
                             <div className="form-content col-md-5 col-8">
-                                <label className="form-label">難易度</label>
+                                <label className="form-label">難易度<span className="required-option">*</span></label>
                                 <select name="difficulty" className="form-select" onChange={doChangeDifficulty}>
                                     <option value="">選択してください</option>
                                     {difficultyChoices.map((difficulty, i) => <option value={difficulty.value} key={i}>{difficulty.option}</option>)}
                                 </select>
                             </div>
                             <div className="form-content col-md-5 col-8">
-                                <label className="form-label">メモ</label>
+                                <label className="form-label">メモ<span className="required-option">*</span></label>
                                 <select name="memo" className="form-select" onChange={doChangeMemoLength}>
                                     <option value="">選択してください</option>
                                     {memoChoices.map((memo, i) => <option value={memo.value} key={i}>{memo.option}</option>)}
@@ -308,14 +308,14 @@ const SearchChartForm = (props) => {
                     <form onSubmit={doSubmitMirror}>
                         <div className="row form-group justify-content-center">
                             <div className="form-content col-md-5 col-8">
-                                <label className="form-label">難易度</label>
+                                <label className="form-label">難易度<span className="required-option">*</span></label>
                                 <select name="difficulty" className="form-select" onChange={doChangeDifficulty}>
                                     <option value="">選択してください</option>
                                     {difficultyChoices.map((difficulty, i) => <option value={difficulty.value} key={i}>{difficulty.option}</option>)}
                                 </select>
                             </div>
                             <div className="form-content col-md-5 col-8">
-                                <label className="form-label">ミラー</label>
+                                <label className="form-label">ミラー<span className="required-option">*</span></label>
                                 <select name="mirror" className="form-select" onChange={doChangeMirror}>
                                     <option value="">選択してください</option>
                                     {mirrorChoices.map((mirror, i) => <option value={mirror.value} key={i}>{mirror.option}</option>)}

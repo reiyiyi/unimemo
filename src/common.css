@@ -16,6 +16,11 @@
     font-size: 0.8rem;
 }
 
+.required-option {
+    color: red;
+    font-weight: 800;
+}
+
 .cell-btn {
     --bs-btn-padding-y: 0.15rem;
     --bs-btn-padding-x: 0.4rem;
@@ -71,6 +76,10 @@
 
 .form-label {
     font-weight: 600;
+}
+
+.chart-table {
+    font-size: 0.8rem;
 }
 
 .chart-row .BAS {
